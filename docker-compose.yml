@@ -11,7 +11,7 @@ services:
   ####### Prometheus #######
   prometheus:
     restart: unless-stopped
-    user: "1000:1000" # you may need to change this by using id -u
+    user: root
     image: prom/prometheus:v2.48.1
     volumes:
       - ./data/prometheus:/prometheus
