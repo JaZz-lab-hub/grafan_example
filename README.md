@@ -1,3 +1,11 @@
+# Grafana Example
+
+## Demo
+https://github.com/user-attachments/assets/2fd54328-899a-43d4-82a9-153b084e4999
+
+
+
+## How to
 - run `docker compose up -d`
 - goto `http://localhost:3000`
 - user/pwd are: admin/admin
