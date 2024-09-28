@@ -12,6 +12,7 @@
     "express": "^4.21.0",
     "express-basic-auth": "^1.2.1",
     "prom-client": "^14",
-    "prometheus-api-metrics": "^3.2.2"
+    "prometheus-api-metrics": "^3.2.2",
+    "uuid": "^10.0.0"
   }
 }

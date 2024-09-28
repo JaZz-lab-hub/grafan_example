@@ -2,7 +2,7 @@ const express = require('express');
 const basicAuth = require('express-basic-auth');
 const apiMetrics = require('prometheus-api-metrics');
 const Prometheus = require('prom-client');
-
+const { v4: uuid } = require('uuid');
 const app = express();
 const port = 80;
 
@@ -26,7 +26,7 @@ const authMiddleware = basicAuth({
 const forbiddenAccessMetric = new Prometheus.Counter({
   name: 'forbidden_access_total',
   help: 'Total number of forbidden access attempts',
-  labelNames: ['path'],
+  labelNames: ['path', 'user', '_id'],
 });
 
 // middleware that will check if the user is authorized to access that endpoint
@@ -35,17 +35,20 @@ const checkAccess = (allowedUsers) => (req, res, next) => {
   if (allowedUsers.includes(username)) {
     return next();
   }
-  forbiddenAccessMetric.inc({ path: req.path });
+  forbiddenAccessMetric.inc({ path: req.path, user: username, _id: uuid() });
   return res.status(403).send('Forbidden');
 };
 
 // expose prometheus metrics
 app.use(apiMetrics());
 
-// reset the custom metric  every 30s
-setInterval(() => {
-  forbiddenAccessMetric.reset();
-}, 30000);
+// reset the custom metric  every 60s
+setInterval(
+  () => {
+    forbiddenAccessMetric.reset();
+  },
+  parseInt(process.env.RESET_ACESS_METRIC || '60000')
+);
 
 // Routes
 app.get('/admin', authMiddleware, checkAccess(['admin']), (_, res) => {

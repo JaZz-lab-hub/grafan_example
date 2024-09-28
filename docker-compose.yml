@@ -52,5 +52,7 @@ services:
       grafana:
     ports:
       - "3001:80"
+    environment:
+      RESET_ACESS_METRIC: "120000" # 2 minutes
 networks:
   grafana:
