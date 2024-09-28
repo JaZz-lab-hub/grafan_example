@@ -44,15 +44,23 @@ services:
       - MAILDEV_SMTP_PORT=1025
     ports:
       - "1080:1080"
-
+  ####### Apps #######
   server-app:
     build:
-      context: server-app/.
+      context: ./server-app/.
     networks:
       grafana:
     ports:
       - "3001:80"
     environment:
-      RESET_ACESS_METRIC: "120000" # 2 minutes
+      RESET_ACESS_METRIC: "900000" # 10 minutes
+  stress:
+    build:
+      context: ./stress/.
+  curl:
+    networks:
+      grafana:
+    build:
+      context: ./curl/.
 networks:
   grafana:
