@@ -1,0 +1,2 @@
+- run `docker compose up -d`
+- goto `http://localhost:3000`
