@@ -44,5 +44,13 @@ services:
       - MAILDEV_SMTP_PORT=1025
     ports:
       - "1080:1080"
+
+  server-app:
+    build:
+      context: server-app/.
+    networks:
+      grafana:
+    ports:
+      - "3001:80"
 networks:
   grafana:
