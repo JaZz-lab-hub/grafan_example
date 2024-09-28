@@ -11,7 +11,7 @@ services:
   ####### Prometheus #######
   prometheus:
     restart: unless-stopped
-    user: root
+    user: "1000:1000" # you may need to change this by using id -u
     image: prom/prometheus:v2.48.1
     volumes:
       - ./data/prometheus:/prometheus
@@ -21,7 +21,7 @@ services:
   ####### Graphana #######
   grafana:
     restart: unless-stopped
-    user: root
+    user: "1000:1000" # you may need to change this by using id -u
     image: grafana/grafana:10.2.2
     networks:
       grafana:
