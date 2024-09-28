@@ -29,6 +29,9 @@ services:
       - ./data/grafana:/var/lib/grafana
     environment:
       GF_SMTP_HOST: maildev:1025
+      GF_METRICS_INTERVAL_SECONDS: 5
+      GF_ALERTING_MIN_INTERVAL_SECONDS: 5
+      GF_ALERTING_MAX_ATTEMPTS: 1
       GF_SMTP_ENABLED: "true"
     ports:
       - 3000:3000
