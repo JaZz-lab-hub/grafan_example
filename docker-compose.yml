@@ -35,6 +35,29 @@ services:
       GF_SMTP_ENABLED: "true"
     ports:
       - 3000:3000
+  promtail:
+    image: grafana/promtail
+    networks:
+      grafana:
+    volumes:
+      - ./config/loki:/mnt/config
+      - ./data/zeek/logs:/zeek-logs
+    command: -config.file=/mnt/config/promtail-config.yml
+  loki:
+    image: grafana/loki
+    volumes:
+      - "./config/loki:/mnt/config"
+    networks:
+      grafana:
+    command: "-config.file=/mnt/config/loki-config.yml"
+
+  ####### Zeek  #######
+  zeek:
+    image: zeek/zeek:lts
+    network_mode: host
+    volumes:
+      - ./data/zeek/logs:/logs
+    command: /bin/bash -c "cd /logs && zeek -i any"
   ####### Maildev #######
   maildev:
     image: maildev/maildev
@@ -67,3 +90,4 @@ services:
       context: ./curl/.
 networks:
   grafana:
+    driver: bridge
