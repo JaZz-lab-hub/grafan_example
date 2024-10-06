@@ -42,6 +42,7 @@ services:
     volumes:
       - ./config/loki:/mnt/config
       - ./data/zeek/logs:/zeek-logs
+      - ./data/suricata/logs:/suricata-logs
     command: -config.file=/mnt/config/promtail-config.yml
   loki:
     image: grafana/loki
@@ -58,6 +59,17 @@ services:
     volumes:
       - ./data/zeek/logs:/logs
     command: /bin/bash -c "cd /logs && zeek -i any"
+  ####### Suricata #######
+  suricata:
+    build:
+      context: suricata/.
+    network_mode: host
+    volumes:
+      - ./config/suricata/suricata.yml:/etc/suricata/suricata.yml
+      - ./data/suricata/rules:/var/lib/suricata/rules
+      - ./data/suricata/logs:/var/log/suricata/
+    # change wlp3s0 by result of ip addr
+    command: /bin/bash -c "suricata-update && suricata -c /etc/suricata/suricata.yaml -i wlp3s0 && tail -f /var/log/cron.log"
   ####### Maildev #######
   maildev:
     image: maildev/maildev

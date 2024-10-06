@@ -23,3 +23,11 @@ scrape_configs:
         labels:
           job: zeek
           __path__: /zeek-logs/*.log
+
+  - job_name: suricata
+    static_configs:
+      - targets:
+          - suricata
+        labels:
+          job: suricata
+          __path__: /suricata-logs/eve.json
