@@ -69,7 +69,7 @@ services:
       - ./data/suricata/rules:/var/lib/suricata/rules
       - ./data/suricata/logs:/var/log/suricata/
     # change wlp3s0 by result of ip addr
-    command: /bin/bash -c "suricata-update && suricata -c /etc/suricata/suricata.yaml -i wlp3s0 && tail -f /var/log/cron.log"
+    command: /bin/bash -c "suricata-update && suricata -c /etc/suricata/suricata.yaml -i br_grafana && tail -f /var/log/cron.log"
   ####### Maildev #######
   maildev:
     image: maildev/maildev
@@ -103,3 +103,9 @@ services:
 networks:
   grafana:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.21.0.0/16
+    driver_opts:
+      com.docker.network.bridge.name: br_grafana

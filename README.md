@@ -1,11 +1,11 @@
 # Grafana Example
 
 ## Demo
+
 https://github.com/user-attachments/assets/2fd54328-899a-43d4-82a9-153b084e4999
 
-
-
 ## How to
+
 - run `docker compose up -d`
 - goto `http://localhost:3000`
 - user/pwd are: admin/admin
@@ -28,4 +28,10 @@ docker compose exec curl curl -u admin:admin http://server-app/admin    # author
 docker compose exec curl curl -u user:user http://server-app/user       # authorized
 docker compose exec curl curl -u user:user http://server-app/employee   # unauthorized, alert
 docker compose exec curl curl -u user:user http://server-app/admin      # unauthorized, alert
+```
+
+## Suricata alert:
+
+```
+drc exec curl curl http://testmynids.org/uid/index.html
 ```
