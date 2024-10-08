@@ -4,3 +4,4 @@ data/prometheus
 data/zeek
 data/suricata
 *.tmpl
+docker-compose.override.yml
